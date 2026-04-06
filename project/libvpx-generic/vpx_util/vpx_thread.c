@@ -83,7 +83,7 @@ static void init(VPxWorker *const worker) {
   worker->status_ = NOT_OK;
 }
 
-static int sync(VPxWorker *const worker) {
+static int _sync(VPxWorker *const worker) {
 #if CONFIG_MULTITHREAD
   change_state(worker, OK);
 #endif
@@ -123,7 +123,7 @@ static int reset(VPxWorker *const worker) {
     worker->status_ = OK;
 #endif
   } else if (worker->status_ > OK) {
-    ok = sync(worker);
+    ok = _sync(worker);
   }
   assert(!ok || (worker->status_ == OK));
   return ok;
@@ -163,7 +163,7 @@ static void end(VPxWorker *const worker) {
 //------------------------------------------------------------------------------
 
 static VPxWorkerInterface g_worker_interface = {
-  init, reset, sync, launch, execute, end
+  init, reset, _sync, launch, execute, end
 };
 
 int vpx_set_worker_interface(const VPxWorkerInterface* const winterface) {

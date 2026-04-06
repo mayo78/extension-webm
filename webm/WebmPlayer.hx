@@ -59,7 +59,7 @@ class WebmPlayer extends Bitmap
 		webmDecoder = hx_webm_decoder_create(io.io, soundEnabled);
 		
 		var info = hx_webm_decoder_get_info(webmDecoder);
-		bitmapData = new BitmapData(info[0].int(), info[1].int(), false, 0);
+		bitmapData = new BitmapData(info[0].int(), info[1].int(), true, 0x00);
 		frameRate = info[2];
 		duration = info[3];
 
@@ -101,7 +101,7 @@ class WebmPlayer extends Bitmap
 	
 	public function getElapsedTime():Float
 	{
-		return haxe.Timer.stamp() - startTime;
+		return (openfl.Lib.getTimer() - startTime) / 1000;
 	}
 	
 	public function restart()
@@ -118,7 +118,7 @@ class WebmPlayer extends Bitmap
 	{
 		if (!playing)
 		{
-			startTime = haxe.Timer.stamp();
+			startTime = openfl.Lib.getTimer();
 
 			if (soundEnabled)
 			{

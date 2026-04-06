@@ -38,10 +38,14 @@ static int get_cpu_count()
     int core_count = 16;
 
 #if HAVE_UNISTD_H && !defined(__OS2__)
+#ifdef HX_NX
+	core_count = 4;
+#else
 #if defined(_SC_NPROCESSORS_ONLN)
     core_count = sysconf(_SC_NPROCESSORS_ONLN);
 #elif defined(_SC_NPROC_ONLN)
     core_count = sysconf(_SC_NPROC_ONLN);
+#endif
 #endif
 #elif defined(_WIN32)
     {
