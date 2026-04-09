@@ -615,7 +615,7 @@ mkvmuxer::uint64 mkvmuxer::MakeUID(unsigned int* seed) {
       close(fd);
     }
     const int32 nn = temp_num;
-#elif defined __MINGW32__
+#elif defined __MINGW32__ || defined (HX_NX)
     const int32 nn = rand();
 #else
     const int32 nn = rand_r(seed);
